@@ -1,0 +1,41 @@
+ /** this is a comment line 
+ in the sample program **/
+ INT f2(INT x, INT y ) 
+ BEGIN 
+    REAL z;
+    /** test array **/
+    INT xx[10][5][6];
+    REAL yy[10][6];
+    z := yy[5.2][xx[2][3][4]];
+    xx[2][1] := 5;
+    z := ((((100 + 0.5) * 3 / 6 + 2 - 7) / 5) + 9 * 5) / 5.6;
+    RETURN x; 
+ END 
+ INT MAIN f1() 
+ BEGIN
+    INT x;
+    /** test READ **/
+    READ(x, "A41.input");
+    INT y;
+    READ(y, "A42.input");
+    REAL z;
+    /** test IF-ELSE **/
+    IF (z == 60) BEGIN
+        x := 1;
+        IF (y == 50) BEGIN
+            x := 3;
+        END ELSE BEGIN
+            x := 4;
+        END
+    END ELSE BEGIN
+        x := 2;
+    END
+    /** test function call **/
+    z := f2(x,y) + f2(y, x);
+    /** test WHILE loop **/
+    WHILE (z < 60 || y == 100) BEGIN
+        z := z + 1;
+    END
+    /** test WRITE **/
+    WRITE (z, "A4.output"); 
+ END

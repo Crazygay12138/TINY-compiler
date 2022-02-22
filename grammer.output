@@ -1,0 +1,1685 @@
+Terminals unused in grammar
+
+   COMMENT
+   WID
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: Program MethodDecl
+    2        | %empty
+
+    3 $@1: %empty
+
+    4 MethodDecl: Type MAIN ID $@1 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    5 $@2: %empty
+
+    6 MethodDecl: Type ID $@2 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    7 FormalParams: FormalParam
+    8             | FormalParams COMMA FormalParam
+    9             | %empty
+
+   10 FormalParam: Type ID
+
+   11 Type: INT
+   12     | REAL
+
+   13 Block: BGN Statements END
+   14      | BGN END
+
+   15 Statements: Statements Statement
+   16           | Statement
+   17           | error Statement
+
+   18 Statement: Block
+   19          | LocalVarDecl
+   20          | AssignStmt
+   21          | ReturnStmt
+   22          | IfStmt
+   23          | WhileStmt
+   24          | WriteStmt
+   25          | ReadStmt
+   26          | SEMICOLON
+
+   27 LocalVarDecl: Type ID SEMICOLON
+   28             | Type ID ConstIndexs SEMICOLON
+
+   29 ConstIndexs: ConstIndexs LEFTSQUAREBRACKETS INTNUMBER RIGHTSQUAREBRACKETS
+   30            | LEFTSQUAREBRACKETS INTNUMBER RIGHTSQUAREBRACKETS
+
+   31 VarIndexs: VarIndexs LEFTSQUAREBRACKETS Expression RIGHTSQUAREBRACKETS
+   32          | LEFTSQUAREBRACKETS Expression RIGHTSQUAREBRACKETS
+
+   33 AssignStmt: ID ASSIGN Expression SEMICOLON
+   34           | ID VarIndexs ASSIGN Expression SEMICOLON
+
+   35 ReturnStmt: RETURN Expression SEMICOLON
+
+   36 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement
+
+   37 $@3: %empty
+
+   38 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement ELSE $@3 Statement
+
+   39 $@4: %empty
+
+   40 WhileStmt: WHILE $@4 LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement
+
+   41 GenIfCode: %empty
+
+   42 WriteStmt: WRITE LEFTBRACKETS Expression COMMA STRING RIGHTBRACKETS SEMICOLON
+
+   43 ReadStmt: READ LEFTBRACKETS ID COMMA STRING RIGHTBRACKETS SEMICOLON
+
+   44 Expression: Expression PLUS MultiplicativeExpr
+   45           | Expression MINUS MultiplicativeExpr
+   46           | MultiplicativeExpr
+
+   47 MultiplicativeExpr: MultiplicativeExpr MULTI PrimaryExpr
+   48                   | MultiplicativeExpr DIV PrimaryExpr
+   49                   | PrimaryExpr
+
+   50 PrimaryExpr: INTNUMBER
+   51            | REALNUMBER
+   52            | ID
+   53            | ID VarIndexs
+   54            | LEFTBRACKETS Expression RIGHTBRACKETS
+   55            | ID LEFTBRACKETS ActualParams RIGHTBRACKETS
+
+   56 BoolExpressions: BoolExpressions AND BoolExpressions
+   57                | BoolExpressions OR BoolExpressions
+   58                | BoolExpression
+
+   59 BoolExpression: Expression EQUAL Expression
+   60               | Expression NOTEQUAL Expression
+   61               | Expression GT Expression
+   62               | Expression LT Expression
+   63               | Expression GE Expression
+   64               | Expression LE Expression
+
+   65 ActualParams: ActualParams COMMA Expression
+   66             | Expression
+   67             | %empty
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 17
+IF (258) 36 38
+WRITE (259) 42
+READ (260) 43
+RETURN (261) 35
+BGN (262) 13 14
+END (263) 13 14
+MAIN (264) 4
+INT (265) 11
+REAL (266) 12
+ID (267) 4 6 10 27 28 33 34 43 52 53 55
+INTNUMBER (268) 29 30 50
+REALNUMBER (269) 51
+STRING (270) 42 43
+COMMENT (271)
+SEMICOLON (272) 26 27 28 33 34 35 42 43
+COMMA (273) 8 42 43 65
+LEFTBRACKETS (274) 4 6 36 38 40 42 43 54 55
+RIGHTBRACKETS (275) 4 6 36 38 40 42 43 54 55
+PLUS (276) 44
+MINUS (277) 45
+MULTI (278) 47
+DIV (279) 48
+ASSIGN (280) 33 34
+EQUAL (281) 59
+NOTEQUAL (282) 60
+WID (283)
+WHILE (284) 40
+GT (285) 61
+LT (286) 62
+GE (287) 63
+LE (288) 64
+LEFTSQUAREBRACKETS (289) 29 30 31 32
+RIGHTSQUAREBRACKETS (290) 29 30 31 32
+OR (291) 57
+AND (292) 56
+IFX (293)
+ELSE (294) 38
+
+
+Nonterminals, with rules where they appear
+
+$accept (40)
+    on left: 0
+Program (41)
+    on left: 1 2, on right: 0 1
+MethodDecl (42)
+    on left: 4 6, on right: 1
+$@1 (43)
+    on left: 3, on right: 4
+$@2 (44)
+    on left: 5, on right: 6
+FormalParams (45)
+    on left: 7 8 9, on right: 4 6 8
+FormalParam (46)
+    on left: 10, on right: 7 8
+Type (47)
+    on left: 11 12, on right: 4 6 10 27 28
+Block (48)
+    on left: 13 14, on right: 4 6 18
+Statements (49)
+    on left: 15 16 17, on right: 13 15
+Statement (50)
+    on left: 18 19 20 21 22 23 24 25 26, on right: 15 16 17 36 38 40
+LocalVarDecl (51)
+    on left: 27 28, on right: 19
+ConstIndexs (52)
+    on left: 29 30, on right: 28 29
+VarIndexs (53)
+    on left: 31 32, on right: 31 34 53
+AssignStmt (54)
+    on left: 33 34, on right: 20
+ReturnStmt (55)
+    on left: 35, on right: 21
+IfStmt (56)
+    on left: 36 38, on right: 22
+$@3 (57)
+    on left: 37, on right: 38
+WhileStmt (58)
+    on left: 40, on right: 23
+$@4 (59)
+    on left: 39, on right: 40
+GenIfCode (60)
+    on left: 41, on right: 36 38 40
+WriteStmt (61)
+    on left: 42, on right: 24
+ReadStmt (62)
+    on left: 43, on right: 25
+Expression (63)
+    on left: 44 45 46, on right: 31 32 33 34 35 42 44 45 54 59 60 61
+    62 63 64 65 66
+MultiplicativeExpr (64)
+    on left: 47 48 49, on right: 44 45 46 47 48
+PrimaryExpr (65)
+    on left: 50 51 52 53 54 55, on right: 47 48 49
+BoolExpressions (66)
+    on left: 56 57 58, on right: 36 38 40 56 57
+BoolExpression (67)
+    on left: 59 60 61 62 63 64, on right: 58
+ActualParams (68)
+    on left: 65 66 67, on right: 55 65
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    $default  reduce using rule 2 (Program)
+
+    Program  go to state 1
+
+
+State 1
+
+    0 $accept: Program . $end
+    1 Program: Program . MethodDecl
+
+    $end  shift, and go to state 2
+    INT   shift, and go to state 3
+    REAL  shift, and go to state 4
+
+    MethodDecl  go to state 5
+    Type        go to state 6
+
+
+State 2
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 3
+
+   11 Type: INT .
+
+    $default  reduce using rule 11 (Type)
+
+
+State 4
+
+   12 Type: REAL .
+
+    $default  reduce using rule 12 (Type)
+
+
+State 5
+
+    1 Program: Program MethodDecl .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 6
+
+    4 MethodDecl: Type . MAIN ID $@1 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+    6           | Type . ID $@2 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    MAIN  shift, and go to state 7
+    ID    shift, and go to state 8
+
+
+State 7
+
+    4 MethodDecl: Type MAIN . ID $@1 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    ID  shift, and go to state 9
+
+
+State 8
+
+    6 MethodDecl: Type ID . $@2 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    $default  reduce using rule 5 ($@2)
+
+    $@2  go to state 10
+
+
+State 9
+
+    4 MethodDecl: Type MAIN ID . $@1 LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    $default  reduce using rule 3 ($@1)
+
+    $@1  go to state 11
+
+
+State 10
+
+    6 MethodDecl: Type ID $@2 . LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    LEFTBRACKETS  shift, and go to state 12
+
+
+State 11
+
+    4 MethodDecl: Type MAIN ID $@1 . LEFTBRACKETS FormalParams RIGHTBRACKETS Block
+
+    LEFTBRACKETS  shift, and go to state 13
+
+
+State 12
+
+    6 MethodDecl: Type ID $@2 LEFTBRACKETS . FormalParams RIGHTBRACKETS Block
+
+    INT   shift, and go to state 3
+    REAL  shift, and go to state 4
+
+    $default  reduce using rule 9 (FormalParams)
+
+    FormalParams  go to state 14
+    FormalParam   go to state 15
+    Type          go to state 16
+
+
+State 13
+
+    4 MethodDecl: Type MAIN ID $@1 LEFTBRACKETS . FormalParams RIGHTBRACKETS Block
+
+    INT   shift, and go to state 3
+    REAL  shift, and go to state 4
+
+    $default  reduce using rule 9 (FormalParams)
+
+    FormalParams  go to state 17
+    FormalParam   go to state 15
+    Type          go to state 16
+
+
+State 14
+
+    6 MethodDecl: Type ID $@2 LEFTBRACKETS FormalParams . RIGHTBRACKETS Block
+    8 FormalParams: FormalParams . COMMA FormalParam
+
+    COMMA          shift, and go to state 18
+    RIGHTBRACKETS  shift, and go to state 19
+
+
+State 15
+
+    7 FormalParams: FormalParam .
+
+    $default  reduce using rule 7 (FormalParams)
+
+
+State 16
+
+   10 FormalParam: Type . ID
+
+    ID  shift, and go to state 20
+
+
+State 17
+
+    4 MethodDecl: Type MAIN ID $@1 LEFTBRACKETS FormalParams . RIGHTBRACKETS Block
+    8 FormalParams: FormalParams . COMMA FormalParam
+
+    COMMA          shift, and go to state 18
+    RIGHTBRACKETS  shift, and go to state 21
+
+
+State 18
+
+    8 FormalParams: FormalParams COMMA . FormalParam
+
+    INT   shift, and go to state 3
+    REAL  shift, and go to state 4
+
+    FormalParam  go to state 22
+    Type         go to state 16
+
+
+State 19
+
+    6 MethodDecl: Type ID $@2 LEFTBRACKETS FormalParams RIGHTBRACKETS . Block
+
+    BGN  shift, and go to state 23
+
+    Block  go to state 24
+
+
+State 20
+
+   10 FormalParam: Type ID .
+
+    $default  reduce using rule 10 (FormalParam)
+
+
+State 21
+
+    4 MethodDecl: Type MAIN ID $@1 LEFTBRACKETS FormalParams RIGHTBRACKETS . Block
+
+    BGN  shift, and go to state 23
+
+    Block  go to state 25
+
+
+State 22
+
+    8 FormalParams: FormalParams COMMA FormalParam .
+
+    $default  reduce using rule 8 (FormalParams)
+
+
+State 23
+
+   13 Block: BGN . Statements END
+   14      | BGN . END
+
+    error      shift, and go to state 26
+    IF         shift, and go to state 27
+    WRITE      shift, and go to state 28
+    READ       shift, and go to state 29
+    RETURN     shift, and go to state 30
+    BGN        shift, and go to state 23
+    END        shift, and go to state 31
+    INT        shift, and go to state 3
+    REAL       shift, and go to state 4
+    ID         shift, and go to state 32
+    SEMICOLON  shift, and go to state 33
+    WHILE      shift, and go to state 34
+
+    Type          go to state 35
+    Block         go to state 36
+    Statements    go to state 37
+    Statement     go to state 38
+    LocalVarDecl  go to state 39
+    AssignStmt    go to state 40
+    ReturnStmt    go to state 41
+    IfStmt        go to state 42
+    WhileStmt     go to state 43
+    WriteStmt     go to state 44
+    ReadStmt      go to state 45
+
+
+State 24
+
+    6 MethodDecl: Type ID $@2 LEFTBRACKETS FormalParams RIGHTBRACKETS Block .
+
+    $default  reduce using rule 6 (MethodDecl)
+
+
+State 25
+
+    4 MethodDecl: Type MAIN ID $@1 LEFTBRACKETS FormalParams RIGHTBRACKETS Block .
+
+    $default  reduce using rule 4 (MethodDecl)
+
+
+State 26
+
+   17 Statements: error . Statement
+
+    IF         shift, and go to state 27
+    WRITE      shift, and go to state 28
+    READ       shift, and go to state 29
+    RETURN     shift, and go to state 30
+    BGN        shift, and go to state 23
+    INT        shift, and go to state 3
+    REAL       shift, and go to state 4
+    ID         shift, and go to state 32
+    SEMICOLON  shift, and go to state 33
+    WHILE      shift, and go to state 34
+
+    Type          go to state 35
+    Block         go to state 36
+    Statement     go to state 46
+    LocalVarDecl  go to state 39
+    AssignStmt    go to state 40
+    ReturnStmt    go to state 41
+    IfStmt        go to state 42
+    WhileStmt     go to state 43
+    WriteStmt     go to state 44
+    ReadStmt      go to state 45
+
+
+State 27
+
+   36 IfStmt: IF . LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement
+   38       | IF . LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement ELSE $@3 Statement
+
+    LEFTBRACKETS  shift, and go to state 47
+
+
+State 28
+
+   42 WriteStmt: WRITE . LEFTBRACKETS Expression COMMA STRING RIGHTBRACKETS SEMICOLON
+
+    LEFTBRACKETS  shift, and go to state 48
+
+
+State 29
+
+   43 ReadStmt: READ . LEFTBRACKETS ID COMMA STRING RIGHTBRACKETS SEMICOLON
+
+    LEFTBRACKETS  shift, and go to state 49
+
+
+State 30
+
+   35 ReturnStmt: RETURN . Expression SEMICOLON
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 54
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 31
+
+   14 Block: BGN END .
+
+    $default  reduce using rule 14 (Block)
+
+
+State 32
+
+   33 AssignStmt: ID . ASSIGN Expression SEMICOLON
+   34           | ID . VarIndexs ASSIGN Expression SEMICOLON
+
+    ASSIGN              shift, and go to state 57
+    LEFTSQUAREBRACKETS  shift, and go to state 58
+
+    VarIndexs  go to state 59
+
+
+State 33
+
+   26 Statement: SEMICOLON .
+
+    $default  reduce using rule 26 (Statement)
+
+
+State 34
+
+   40 WhileStmt: WHILE . $@4 LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement
+
+    $default  reduce using rule 39 ($@4)
+
+    $@4  go to state 60
+
+
+State 35
+
+   27 LocalVarDecl: Type . ID SEMICOLON
+   28             | Type . ID ConstIndexs SEMICOLON
+
+    ID  shift, and go to state 61
+
+
+State 36
+
+   18 Statement: Block .
+
+    $default  reduce using rule 18 (Statement)
+
+
+State 37
+
+   13 Block: BGN Statements . END
+   15 Statements: Statements . Statement
+
+    IF         shift, and go to state 27
+    WRITE      shift, and go to state 28
+    READ       shift, and go to state 29
+    RETURN     shift, and go to state 30
+    BGN        shift, and go to state 23
+    END        shift, and go to state 62
+    INT        shift, and go to state 3
+    REAL       shift, and go to state 4
+    ID         shift, and go to state 32
+    SEMICOLON  shift, and go to state 33
+    WHILE      shift, and go to state 34
+
+    Type          go to state 35
+    Block         go to state 36
+    Statement     go to state 63
+    LocalVarDecl  go to state 39
+    AssignStmt    go to state 40
+    ReturnStmt    go to state 41
+    IfStmt        go to state 42
+    WhileStmt     go to state 43
+    WriteStmt     go to state 44
+    ReadStmt      go to state 45
+
+
+State 38
+
+   16 Statements: Statement .
+
+    $default  reduce using rule 16 (Statements)
+
+
+State 39
+
+   19 Statement: LocalVarDecl .
+
+    $default  reduce using rule 19 (Statement)
+
+
+State 40
+
+   20 Statement: AssignStmt .
+
+    $default  reduce using rule 20 (Statement)
+
+
+State 41
+
+   21 Statement: ReturnStmt .
+
+    $default  reduce using rule 21 (Statement)
+
+
+State 42
+
+   22 Statement: IfStmt .
+
+    $default  reduce using rule 22 (Statement)
+
+
+State 43
+
+   23 Statement: WhileStmt .
+
+    $default  reduce using rule 23 (Statement)
+
+
+State 44
+
+   24 Statement: WriteStmt .
+
+    $default  reduce using rule 24 (Statement)
+
+
+State 45
+
+   25 Statement: ReadStmt .
+
+    $default  reduce using rule 25 (Statement)
+
+
+State 46
+
+   17 Statements: error Statement .
+
+    $default  reduce using rule 17 (Statements)
+
+
+State 47
+
+   36 IfStmt: IF LEFTBRACKETS . BoolExpressions GenIfCode RIGHTBRACKETS Statement
+   38       | IF LEFTBRACKETS . BoolExpressions GenIfCode RIGHTBRACKETS Statement ELSE $@3 Statement
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 64
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+    BoolExpressions     go to state 65
+    BoolExpression      go to state 66
+
+
+State 48
+
+   42 WriteStmt: WRITE LEFTBRACKETS . Expression COMMA STRING RIGHTBRACKETS SEMICOLON
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 67
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 49
+
+   43 ReadStmt: READ LEFTBRACKETS . ID COMMA STRING RIGHTBRACKETS SEMICOLON
+
+    ID  shift, and go to state 68
+
+
+State 50
+
+   52 PrimaryExpr: ID .
+   53            | ID . VarIndexs
+   55            | ID . LEFTBRACKETS ActualParams RIGHTBRACKETS
+
+    LEFTBRACKETS        shift, and go to state 69
+    LEFTSQUAREBRACKETS  shift, and go to state 58
+
+    $default  reduce using rule 52 (PrimaryExpr)
+
+    VarIndexs  go to state 70
+
+
+State 51
+
+   50 PrimaryExpr: INTNUMBER .
+
+    $default  reduce using rule 50 (PrimaryExpr)
+
+
+State 52
+
+   51 PrimaryExpr: REALNUMBER .
+
+    $default  reduce using rule 51 (PrimaryExpr)
+
+
+State 53
+
+   54 PrimaryExpr: LEFTBRACKETS . Expression RIGHTBRACKETS
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 71
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 54
+
+   35 ReturnStmt: RETURN Expression . SEMICOLON
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+
+    SEMICOLON  shift, and go to state 72
+    PLUS       shift, and go to state 73
+    MINUS      shift, and go to state 74
+
+
+State 55
+
+   46 Expression: MultiplicativeExpr .
+   47 MultiplicativeExpr: MultiplicativeExpr . MULTI PrimaryExpr
+   48                   | MultiplicativeExpr . DIV PrimaryExpr
+
+    MULTI  shift, and go to state 75
+    DIV    shift, and go to state 76
+
+    $default  reduce using rule 46 (Expression)
+
+
+State 56
+
+   49 MultiplicativeExpr: PrimaryExpr .
+
+    $default  reduce using rule 49 (MultiplicativeExpr)
+
+
+State 57
+
+   33 AssignStmt: ID ASSIGN . Expression SEMICOLON
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 77
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 58
+
+   32 VarIndexs: LEFTSQUAREBRACKETS . Expression RIGHTSQUAREBRACKETS
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 78
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 59
+
+   31 VarIndexs: VarIndexs . LEFTSQUAREBRACKETS Expression RIGHTSQUAREBRACKETS
+   34 AssignStmt: ID VarIndexs . ASSIGN Expression SEMICOLON
+
+    ASSIGN              shift, and go to state 79
+    LEFTSQUAREBRACKETS  shift, and go to state 80
+
+
+State 60
+
+   40 WhileStmt: WHILE $@4 . LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement
+
+    LEFTBRACKETS  shift, and go to state 81
+
+
+State 61
+
+   27 LocalVarDecl: Type ID . SEMICOLON
+   28             | Type ID . ConstIndexs SEMICOLON
+
+    SEMICOLON           shift, and go to state 82
+    LEFTSQUAREBRACKETS  shift, and go to state 83
+
+    ConstIndexs  go to state 84
+
+
+State 62
+
+   13 Block: BGN Statements END .
+
+    $default  reduce using rule 13 (Block)
+
+
+State 63
+
+   15 Statements: Statements Statement .
+
+    $default  reduce using rule 15 (Statements)
+
+
+State 64
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   59 BoolExpression: Expression . EQUAL Expression
+   60               | Expression . NOTEQUAL Expression
+   61               | Expression . GT Expression
+   62               | Expression . LT Expression
+   63               | Expression . GE Expression
+   64               | Expression . LE Expression
+
+    PLUS      shift, and go to state 73
+    MINUS     shift, and go to state 74
+    EQUAL     shift, and go to state 85
+    NOTEQUAL  shift, and go to state 86
+    GT        shift, and go to state 87
+    LT        shift, and go to state 88
+    GE        shift, and go to state 89
+    LE        shift, and go to state 90
+
+
+State 65
+
+   36 IfStmt: IF LEFTBRACKETS BoolExpressions . GenIfCode RIGHTBRACKETS Statement
+   38       | IF LEFTBRACKETS BoolExpressions . GenIfCode RIGHTBRACKETS Statement ELSE $@3 Statement
+   56 BoolExpressions: BoolExpressions . AND BoolExpressions
+   57                | BoolExpressions . OR BoolExpressions
+
+    OR   shift, and go to state 91
+    AND  shift, and go to state 92
+
+    $default  reduce using rule 41 (GenIfCode)
+
+    GenIfCode  go to state 93
+
+
+State 66
+
+   58 BoolExpressions: BoolExpression .
+
+    $default  reduce using rule 58 (BoolExpressions)
+
+
+State 67
+
+   42 WriteStmt: WRITE LEFTBRACKETS Expression . COMMA STRING RIGHTBRACKETS SEMICOLON
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+
+    COMMA  shift, and go to state 94
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+
+State 68
+
+   43 ReadStmt: READ LEFTBRACKETS ID . COMMA STRING RIGHTBRACKETS SEMICOLON
+
+    COMMA  shift, and go to state 95
+
+
+State 69
+
+   55 PrimaryExpr: ID LEFTBRACKETS . ActualParams RIGHTBRACKETS
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    $default  reduce using rule 67 (ActualParams)
+
+    Expression          go to state 96
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+    ActualParams        go to state 97
+
+
+State 70
+
+   31 VarIndexs: VarIndexs . LEFTSQUAREBRACKETS Expression RIGHTSQUAREBRACKETS
+   53 PrimaryExpr: ID VarIndexs .
+
+    LEFTSQUAREBRACKETS  shift, and go to state 80
+
+    $default  reduce using rule 53 (PrimaryExpr)
+
+
+State 71
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   54 PrimaryExpr: LEFTBRACKETS Expression . RIGHTBRACKETS
+
+    RIGHTBRACKETS  shift, and go to state 98
+    PLUS           shift, and go to state 73
+    MINUS          shift, and go to state 74
+
+
+State 72
+
+   35 ReturnStmt: RETURN Expression SEMICOLON .
+
+    $default  reduce using rule 35 (ReturnStmt)
+
+
+State 73
+
+   44 Expression: Expression PLUS . MultiplicativeExpr
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    MultiplicativeExpr  go to state 99
+    PrimaryExpr         go to state 56
+
+
+State 74
+
+   45 Expression: Expression MINUS . MultiplicativeExpr
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    MultiplicativeExpr  go to state 100
+    PrimaryExpr         go to state 56
+
+
+State 75
+
+   47 MultiplicativeExpr: MultiplicativeExpr MULTI . PrimaryExpr
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    PrimaryExpr  go to state 101
+
+
+State 76
+
+   48 MultiplicativeExpr: MultiplicativeExpr DIV . PrimaryExpr
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    PrimaryExpr  go to state 102
+
+
+State 77
+
+   33 AssignStmt: ID ASSIGN Expression . SEMICOLON
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+
+    SEMICOLON  shift, and go to state 103
+    PLUS       shift, and go to state 73
+    MINUS      shift, and go to state 74
+
+
+State 78
+
+   32 VarIndexs: LEFTSQUAREBRACKETS Expression . RIGHTSQUAREBRACKETS
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+
+    PLUS                 shift, and go to state 73
+    MINUS                shift, and go to state 74
+    RIGHTSQUAREBRACKETS  shift, and go to state 104
+
+
+State 79
+
+   34 AssignStmt: ID VarIndexs ASSIGN . Expression SEMICOLON
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 105
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 80
+
+   31 VarIndexs: VarIndexs LEFTSQUAREBRACKETS . Expression RIGHTSQUAREBRACKETS
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 106
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 81
+
+   40 WhileStmt: WHILE $@4 LEFTBRACKETS . BoolExpressions GenIfCode RIGHTBRACKETS Statement
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 64
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+    BoolExpressions     go to state 107
+    BoolExpression      go to state 66
+
+
+State 82
+
+   27 LocalVarDecl: Type ID SEMICOLON .
+
+    $default  reduce using rule 27 (LocalVarDecl)
+
+
+State 83
+
+   30 ConstIndexs: LEFTSQUAREBRACKETS . INTNUMBER RIGHTSQUAREBRACKETS
+
+    INTNUMBER  shift, and go to state 108
+
+
+State 84
+
+   28 LocalVarDecl: Type ID ConstIndexs . SEMICOLON
+   29 ConstIndexs: ConstIndexs . LEFTSQUAREBRACKETS INTNUMBER RIGHTSQUAREBRACKETS
+
+    SEMICOLON           shift, and go to state 109
+    LEFTSQUAREBRACKETS  shift, and go to state 110
+
+
+State 85
+
+   59 BoolExpression: Expression EQUAL . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 111
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 86
+
+   60 BoolExpression: Expression NOTEQUAL . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 112
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 87
+
+   61 BoolExpression: Expression GT . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 113
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 88
+
+   62 BoolExpression: Expression LT . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 114
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 89
+
+   63 BoolExpression: Expression GE . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 115
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 90
+
+   64 BoolExpression: Expression LE . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 116
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 91
+
+   57 BoolExpressions: BoolExpressions OR . BoolExpressions
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 64
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+    BoolExpressions     go to state 117
+    BoolExpression      go to state 66
+
+
+State 92
+
+   56 BoolExpressions: BoolExpressions AND . BoolExpressions
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 64
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+    BoolExpressions     go to state 118
+    BoolExpression      go to state 66
+
+
+State 93
+
+   36 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode . RIGHTBRACKETS Statement
+   38       | IF LEFTBRACKETS BoolExpressions GenIfCode . RIGHTBRACKETS Statement ELSE $@3 Statement
+
+    RIGHTBRACKETS  shift, and go to state 119
+
+
+State 94
+
+   42 WriteStmt: WRITE LEFTBRACKETS Expression COMMA . STRING RIGHTBRACKETS SEMICOLON
+
+    STRING  shift, and go to state 120
+
+
+State 95
+
+   43 ReadStmt: READ LEFTBRACKETS ID COMMA . STRING RIGHTBRACKETS SEMICOLON
+
+    STRING  shift, and go to state 121
+
+
+State 96
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   66 ActualParams: Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 66 (ActualParams)
+
+
+State 97
+
+   55 PrimaryExpr: ID LEFTBRACKETS ActualParams . RIGHTBRACKETS
+   65 ActualParams: ActualParams . COMMA Expression
+
+    COMMA          shift, and go to state 122
+    RIGHTBRACKETS  shift, and go to state 123
+
+
+State 98
+
+   54 PrimaryExpr: LEFTBRACKETS Expression RIGHTBRACKETS .
+
+    $default  reduce using rule 54 (PrimaryExpr)
+
+
+State 99
+
+   44 Expression: Expression PLUS MultiplicativeExpr .
+   47 MultiplicativeExpr: MultiplicativeExpr . MULTI PrimaryExpr
+   48                   | MultiplicativeExpr . DIV PrimaryExpr
+
+    MULTI  shift, and go to state 75
+    DIV    shift, and go to state 76
+
+    $default  reduce using rule 44 (Expression)
+
+
+State 100
+
+   45 Expression: Expression MINUS MultiplicativeExpr .
+   47 MultiplicativeExpr: MultiplicativeExpr . MULTI PrimaryExpr
+   48                   | MultiplicativeExpr . DIV PrimaryExpr
+
+    MULTI  shift, and go to state 75
+    DIV    shift, and go to state 76
+
+    $default  reduce using rule 45 (Expression)
+
+
+State 101
+
+   47 MultiplicativeExpr: MultiplicativeExpr MULTI PrimaryExpr .
+
+    $default  reduce using rule 47 (MultiplicativeExpr)
+
+
+State 102
+
+   48 MultiplicativeExpr: MultiplicativeExpr DIV PrimaryExpr .
+
+    $default  reduce using rule 48 (MultiplicativeExpr)
+
+
+State 103
+
+   33 AssignStmt: ID ASSIGN Expression SEMICOLON .
+
+    $default  reduce using rule 33 (AssignStmt)
+
+
+State 104
+
+   32 VarIndexs: LEFTSQUAREBRACKETS Expression RIGHTSQUAREBRACKETS .
+
+    $default  reduce using rule 32 (VarIndexs)
+
+
+State 105
+
+   34 AssignStmt: ID VarIndexs ASSIGN Expression . SEMICOLON
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+
+    SEMICOLON  shift, and go to state 124
+    PLUS       shift, and go to state 73
+    MINUS      shift, and go to state 74
+
+
+State 106
+
+   31 VarIndexs: VarIndexs LEFTSQUAREBRACKETS Expression . RIGHTSQUAREBRACKETS
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+
+    PLUS                 shift, and go to state 73
+    MINUS                shift, and go to state 74
+    RIGHTSQUAREBRACKETS  shift, and go to state 125
+
+
+State 107
+
+   40 WhileStmt: WHILE $@4 LEFTBRACKETS BoolExpressions . GenIfCode RIGHTBRACKETS Statement
+   56 BoolExpressions: BoolExpressions . AND BoolExpressions
+   57                | BoolExpressions . OR BoolExpressions
+
+    OR   shift, and go to state 91
+    AND  shift, and go to state 92
+
+    $default  reduce using rule 41 (GenIfCode)
+
+    GenIfCode  go to state 126
+
+
+State 108
+
+   30 ConstIndexs: LEFTSQUAREBRACKETS INTNUMBER . RIGHTSQUAREBRACKETS
+
+    RIGHTSQUAREBRACKETS  shift, and go to state 127
+
+
+State 109
+
+   28 LocalVarDecl: Type ID ConstIndexs SEMICOLON .
+
+    $default  reduce using rule 28 (LocalVarDecl)
+
+
+State 110
+
+   29 ConstIndexs: ConstIndexs LEFTSQUAREBRACKETS . INTNUMBER RIGHTSQUAREBRACKETS
+
+    INTNUMBER  shift, and go to state 128
+
+
+State 111
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   59 BoolExpression: Expression EQUAL Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 59 (BoolExpression)
+
+
+State 112
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   60 BoolExpression: Expression NOTEQUAL Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 60 (BoolExpression)
+
+
+State 113
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   61 BoolExpression: Expression GT Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 61 (BoolExpression)
+
+
+State 114
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   62 BoolExpression: Expression LT Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 62 (BoolExpression)
+
+
+State 115
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   63 BoolExpression: Expression GE Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 63 (BoolExpression)
+
+
+State 116
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   64 BoolExpression: Expression LE Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 64 (BoolExpression)
+
+
+State 117
+
+   56 BoolExpressions: BoolExpressions . AND BoolExpressions
+   57                | BoolExpressions . OR BoolExpressions
+   57                | BoolExpressions OR BoolExpressions .
+
+    AND  shift, and go to state 92
+
+    $default  reduce using rule 57 (BoolExpressions)
+
+
+State 118
+
+   56 BoolExpressions: BoolExpressions . AND BoolExpressions
+   56                | BoolExpressions AND BoolExpressions .
+   57                | BoolExpressions . OR BoolExpressions
+
+    $default  reduce using rule 56 (BoolExpressions)
+
+
+State 119
+
+   36 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS . Statement
+   38       | IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS . Statement ELSE $@3 Statement
+
+    IF         shift, and go to state 27
+    WRITE      shift, and go to state 28
+    READ       shift, and go to state 29
+    RETURN     shift, and go to state 30
+    BGN        shift, and go to state 23
+    INT        shift, and go to state 3
+    REAL       shift, and go to state 4
+    ID         shift, and go to state 32
+    SEMICOLON  shift, and go to state 33
+    WHILE      shift, and go to state 34
+
+    Type          go to state 35
+    Block         go to state 36
+    Statement     go to state 129
+    LocalVarDecl  go to state 39
+    AssignStmt    go to state 40
+    ReturnStmt    go to state 41
+    IfStmt        go to state 42
+    WhileStmt     go to state 43
+    WriteStmt     go to state 44
+    ReadStmt      go to state 45
+
+
+State 120
+
+   42 WriteStmt: WRITE LEFTBRACKETS Expression COMMA STRING . RIGHTBRACKETS SEMICOLON
+
+    RIGHTBRACKETS  shift, and go to state 130
+
+
+State 121
+
+   43 ReadStmt: READ LEFTBRACKETS ID COMMA STRING . RIGHTBRACKETS SEMICOLON
+
+    RIGHTBRACKETS  shift, and go to state 131
+
+
+State 122
+
+   65 ActualParams: ActualParams COMMA . Expression
+
+    ID            shift, and go to state 50
+    INTNUMBER     shift, and go to state 51
+    REALNUMBER    shift, and go to state 52
+    LEFTBRACKETS  shift, and go to state 53
+
+    Expression          go to state 132
+    MultiplicativeExpr  go to state 55
+    PrimaryExpr         go to state 56
+
+
+State 123
+
+   55 PrimaryExpr: ID LEFTBRACKETS ActualParams RIGHTBRACKETS .
+
+    $default  reduce using rule 55 (PrimaryExpr)
+
+
+State 124
+
+   34 AssignStmt: ID VarIndexs ASSIGN Expression SEMICOLON .
+
+    $default  reduce using rule 34 (AssignStmt)
+
+
+State 125
+
+   31 VarIndexs: VarIndexs LEFTSQUAREBRACKETS Expression RIGHTSQUAREBRACKETS .
+
+    $default  reduce using rule 31 (VarIndexs)
+
+
+State 126
+
+   40 WhileStmt: WHILE $@4 LEFTBRACKETS BoolExpressions GenIfCode . RIGHTBRACKETS Statement
+
+    RIGHTBRACKETS  shift, and go to state 133
+
+
+State 127
+
+   30 ConstIndexs: LEFTSQUAREBRACKETS INTNUMBER RIGHTSQUAREBRACKETS .
+
+    $default  reduce using rule 30 (ConstIndexs)
+
+
+State 128
+
+   29 ConstIndexs: ConstIndexs LEFTSQUAREBRACKETS INTNUMBER . RIGHTSQUAREBRACKETS
+
+    RIGHTSQUAREBRACKETS  shift, and go to state 134
+
+
+State 129
+
+   36 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement .
+   38       | IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement . ELSE $@3 Statement
+
+    ELSE  shift, and go to state 135
+
+    $default  reduce using rule 36 (IfStmt)
+
+
+State 130
+
+   42 WriteStmt: WRITE LEFTBRACKETS Expression COMMA STRING RIGHTBRACKETS . SEMICOLON
+
+    SEMICOLON  shift, and go to state 136
+
+
+State 131
+
+   43 ReadStmt: READ LEFTBRACKETS ID COMMA STRING RIGHTBRACKETS . SEMICOLON
+
+    SEMICOLON  shift, and go to state 137
+
+
+State 132
+
+   44 Expression: Expression . PLUS MultiplicativeExpr
+   45           | Expression . MINUS MultiplicativeExpr
+   65 ActualParams: ActualParams COMMA Expression .
+
+    PLUS   shift, and go to state 73
+    MINUS  shift, and go to state 74
+
+    $default  reduce using rule 65 (ActualParams)
+
+
+State 133
+
+   40 WhileStmt: WHILE $@4 LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS . Statement
+
+    IF         shift, and go to state 27
+    WRITE      shift, and go to state 28
+    READ       shift, and go to state 29
+    RETURN     shift, and go to state 30
+    BGN        shift, and go to state 23
+    INT        shift, and go to state 3
+    REAL       shift, and go to state 4
+    ID         shift, and go to state 32
+    SEMICOLON  shift, and go to state 33
+    WHILE      shift, and go to state 34
+
+    Type          go to state 35
+    Block         go to state 36
+    Statement     go to state 138
+    LocalVarDecl  go to state 39
+    AssignStmt    go to state 40
+    ReturnStmt    go to state 41
+    IfStmt        go to state 42
+    WhileStmt     go to state 43
+    WriteStmt     go to state 44
+    ReadStmt      go to state 45
+
+
+State 134
+
+   29 ConstIndexs: ConstIndexs LEFTSQUAREBRACKETS INTNUMBER RIGHTSQUAREBRACKETS .
+
+    $default  reduce using rule 29 (ConstIndexs)
+
+
+State 135
+
+   38 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement ELSE . $@3 Statement
+
+    $default  reduce using rule 37 ($@3)
+
+    $@3  go to state 139
+
+
+State 136
+
+   42 WriteStmt: WRITE LEFTBRACKETS Expression COMMA STRING RIGHTBRACKETS SEMICOLON .
+
+    $default  reduce using rule 42 (WriteStmt)
+
+
+State 137
+
+   43 ReadStmt: READ LEFTBRACKETS ID COMMA STRING RIGHTBRACKETS SEMICOLON .
+
+    $default  reduce using rule 43 (ReadStmt)
+
+
+State 138
+
+   40 WhileStmt: WHILE $@4 LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement .
+
+    $default  reduce using rule 40 (WhileStmt)
+
+
+State 139
+
+   38 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement ELSE $@3 . Statement
+
+    IF         shift, and go to state 27
+    WRITE      shift, and go to state 28
+    READ       shift, and go to state 29
+    RETURN     shift, and go to state 30
+    BGN        shift, and go to state 23
+    INT        shift, and go to state 3
+    REAL       shift, and go to state 4
+    ID         shift, and go to state 32
+    SEMICOLON  shift, and go to state 33
+    WHILE      shift, and go to state 34
+
+    Type          go to state 35
+    Block         go to state 36
+    Statement     go to state 140
+    LocalVarDecl  go to state 39
+    AssignStmt    go to state 40
+    ReturnStmt    go to state 41
+    IfStmt        go to state 42
+    WhileStmt     go to state 43
+    WriteStmt     go to state 44
+    ReadStmt      go to state 45
+
+
+State 140
+
+   38 IfStmt: IF LEFTBRACKETS BoolExpressions GenIfCode RIGHTBRACKETS Statement ELSE $@3 Statement .
+
+    $default  reduce using rule 38 (IfStmt)
